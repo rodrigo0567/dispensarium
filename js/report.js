@@ -1,64 +1,58 @@
+// 📊 Gerar relatório simples
 async function generateReport() {
-  const items = await dbGetAll('items');
-  const movements = await dbGetAll('movements');
+  try {
+    const items = await dbGetAll('items');
 
-  const totalStock = items.reduce((acc, i) => acc + (i.qty * (i.price || 0)), 0);
+    const container = document.getElementById('reportContent');
 
-  const el = document.getElementById('reportContent');
+    if (!container) return;
 
-  el.innerHTML = `
-    <div class="stat-cards">
-      <div class="stat-card">
-        <div class="sv">${items.length}</div>
-        <div class="sl">Total de itens</div>
-      </div>
+    if (items.length === 0) {
+      container.innerHTML = `<p style="color:#94a3b8;">Nenhum dado disponível</p>`;
+      return;
+    }
 
-      <div class="stat-card">
-        <div class="sv">R$ ${totalStock.toFixed(2)}</div>
-        <div class="sl">Valor em estoque</div>
-      </div>
-    </div>
+    // separa categorias
+    const kitchen = items.filter(i => i.cat === 'kitchen');
+    const clean   = items.filter(i => i.cat === 'clean');
 
-    <div class="report-section">
-      <h4>📋 Estoque Atual</h4>
+    // total geral
+    const total = items.reduce((acc, i) => acc + i.qty, 0);
 
-      <table class="report-table">
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Qtd</th>
-            <th>Preço</th>
-          </tr>
-        </thead>
+    container.innerHTML = `
+      <h3>Total de Itens: ${total}</h3>
 
-        <tbody>
-          ${items.map(i => `
-            <tr>
-              <td>${i.name}</td>
-              <td>${i.qty}</td>
-              <td>R$ ${i.price || 0}</td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
-    </div>
-  `;
+      <h4>Cozinha</h4>
+      ${renderTable(kitchen)}
+
+      <h4>Limpeza</h4>
+      ${renderTable(clean)}
+    `;
+
+  } catch (e) {
+    console.error("Erro no relatório:", e);
+  }
 }
 
-async function exportCSV() {
-  const items = await dbGetAll('items');
 
-  let csv = "Item;Quantidade;Preço\n";
+// 📋 Render tabela
+function renderTable(list) {
+  if (list.length === 0) {
+    return `<p style="color:#94a3b8;">Nenhum item</p>`;
+  }
 
-  items.forEach(i => {
-    csv += `${i.name};${i.qty};${i.price}\n`;
-  });
-
-  const blob = new Blob([csv], { type: 'text/csv' });
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'relatorio.csv';
-  a.click();
+  return `
+    <table border="1" cellpadding="6" cellspacing="0" style="margin-bottom:20px;">
+      <tr>
+        <th>Item</th>
+        <th>Quantidade</th>
+      </tr>
+      ${list.map(i => `
+        <tr>
+          <td>${i.name}</td>
+          <td>${i.qty}</td>
+        </tr>
+      `).join('')}
+    </table>
+  `;
 }

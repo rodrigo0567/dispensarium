@@ -1,5 +1,3 @@
-const DB_NAME = 'dispensarium_db';
-const DB_VERSION = 1;
 let db = null;
 
 function initDB() {
@@ -16,11 +14,62 @@ function initDB() {
 
     request.onsuccess = function (e) {
       db = e.target.result;
-      resolve();
+      resolve(db);
     };
 
     request.onerror = function () {
-      reject("Erro ao abrir DB");
+      reject("Erro ao abrir banco");
     };
+  });
+}
+
+
+function dbGetAll(store) {
+  return new Promise((resolve, reject) => {
+    if (!db) {
+      reject("DB não inicializado");
+      return;
+    }
+
+    const tx = db.transaction(store, 'readonly');
+    const st = tx.objectStore(store);
+    const req = st.getAll();
+
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+
+function dbPut(store, value) {
+  return new Promise((resolve, reject) => {
+    if (!db) {
+      reject("DB não inicializado");
+      return;
+    }
+
+    const tx = db.transaction(store, 'readwrite');
+    const st = tx.objectStore(store);
+    const req = st.put(value);
+
+    req.onsuccess = () => resolve();
+    req.onerror = () => reject(req.error);
+  });
+}
+
+
+function dbDelete(store, id) {
+  return new Promise((resolve, reject) => {
+    if (!db) {
+      reject("DB não inicializado");
+      return;
+    }
+
+    const tx = db.transaction(store, 'readwrite');
+    const st = tx.objectStore(store);
+    const req = st.delete(id);
+
+    req.onsuccess = () => resolve();
+    req.onerror = () => reject(req.error);
   });
 }
