@@ -8,7 +8,7 @@
   <!-- CSS -->
   <link rel="stylesheet" href="/css/styles.css">
 
-  <!-- Favicon (opcional) -->
+  <!-- Favicon -->
   <link rel="icon" href="/assets/logo.png">
 </head>
 
@@ -31,7 +31,7 @@
   <div id="app" style="display:none;">
 
     <!-- SIDEBAR -->
-    <aside class="sidebar">
+    <aside id="sidebar" class="sidebar">
 
       <div class="sidebar-user">
         Bem-vindo(a),<br>
@@ -39,21 +39,10 @@
       </div>
 
       <nav>
-        <a class="active" onclick="showPage('kitchen')">
-          🍳 Cozinha
-        </a>
-
-        <a onclick="showPage('clean')">
-          🧹 Limpeza
-        </a>
-
-        <a onclick="showPage('report')">
-          📊 Relatório
-        </a>
-
-        <a onclick="openAddModal()">
-          ➕ Adicionar Item
-        </a>
+        <a class="active" onclick="showPage('kitchen', event)">🍳 Cozinha</a>
+        <a onclick="showPage('clean', event)">🧹 Limpeza</a>
+        <a onclick="showPage('report', event)">📊 Relatório</a>
+        <a onclick="openAddModal()">➕ Adicionar Item</a>
       </nav>
 
       <div class="sidebar-footer">
@@ -65,16 +54,19 @@
     <!-- CONTEÚDO -->
     <main>
 
+      <!-- COZINHA -->
       <section id="page-kitchen" class="page active">
         <h2>Cozinha</h2>
-        <div id="grid-kitchen"></div>
+        <div id="grid-kitchen" class="items-grid"></div>
       </section>
 
+      <!-- LIMPEZA -->
       <section id="page-clean" class="page">
         <h2>Limpeza</h2>
-        <div id="grid-clean"></div>
+        <div id="grid-clean" class="items-grid"></div>
       </section>
 
+      <!-- RELATÓRIO -->
       <section id="page-report" class="page">
         <h2>Relatório</h2>
         <div id="reportContent"></div>
@@ -84,7 +76,33 @@
 
   </div>
 
-  <!-- SCRIPTS (ORDEM IMPORTANTE) -->
+  <!-- MODAL ADICIONAR ITEM -->
+  <div id="addModal" class="modal">
+    <div class="modal-content">
+
+      <h3>Adicionar Item</h3>
+
+      <input id="fName" placeholder="Nome do item">
+
+      <select id="fCat">
+        <option value="kitchen">Cozinha</option>
+        <option value="clean">Limpeza</option>
+      </select>
+
+      <input id="fQty" type="number" value="1" min="1">
+
+      <div class="modal-actions">
+        <button onclick="closeModal('addModal')">Cancelar</button>
+        <button onclick="saveItem()">Salvar</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast"></div>
+
+  <!-- SCRIPTS -->
   <script src="/js/db.js"></script>
   <script src="/js/items.js"></script>
   <script src="/js/movements.js"></script>

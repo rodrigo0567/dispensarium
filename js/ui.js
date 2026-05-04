@@ -3,24 +3,30 @@ function showPage(page) {
     p.classList.remove('active')
   );
 
-  document.getElementById('page-' + page).classList.add('active');
-}
+  const el = document.getElementById('page-' + page);
 
-function openModal(id) {
-  document.getElementById(id).classList.add('open');
-}
+  if (!el) {
+    console.error('Página não encontrada:', page);
+    return;
+  }
 
+  el.classList.add('active');
+}
+function openAddModal() {
+  const modal = document.getElementById('addModal');
+
+  if (!modal) {
+    console.error('Modal não encontrado');
+    return;
+  }
+
+  modal.classList.add('open');
+
+  // limpa campos
+  document.getElementById('fName').value = '';
+  document.getElementById('fQty').value = 1;
+}
 function closeModal(id) {
-  document.getElementById(id).classList.remove('open');
-}
-
-function toast(msg) {
-  const el = document.getElementById('toast');
-
-  el.textContent = msg;
-  el.classList.add('show');
-
-  setTimeout(() => {
-    el.classList.remove('show');
-  }, 2500);
+  const modal = document.getElementById(id);
+  if (modal) modal.classList.remove('open');
 }
