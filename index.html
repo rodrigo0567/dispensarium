@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dispensarium</title>
 
-  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
@@ -22,9 +21,61 @@
   </div>
 
   <!-- APP -->
-  <div id="app" style="display:none;">
-    <!-- sidebar + main (mantém igual) -->
-  </div>
+  <!-- APP -->
+<div id="app" style="display:none;">
+
+  <aside class="sidebar">
+    <div class="sidebar-user">
+      Bem-vindo(a),<br>
+      <strong id="sidebarUser">—</strong>
+    </div>
+
+    <nav>
+      <a class="active" onclick="showPage('kitchen')" id="nav-kitchen">
+        <span class="icon">🍳</span> Cozinha
+      </a>
+
+      <a onclick="showPage('clean')" id="nav-clean">
+        <span class="icon">🧹</span> Limpeza
+      </a>
+
+      <a onclick="showPage('report')" id="nav-report">
+        <span class="icon">📊</span> Relatório Mensal
+      </a>
+
+      <a onclick="showPage('feira')" id="nav-feira">
+        <span class="icon">🛒</span> Lista de Feira
+        <span class="nav-badge" id="fairaBadge" style="display:none">0</span>
+      </a>
+
+      <a onclick="openAddModal()" id="nav-add">
+        <span class="icon">➕</span> Adicionar Item
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="btn-logout" onclick="doLogout()">⬅️ Sair</button>
+    </div>
+  </aside>
+
+  <main>
+    <div id="page-kitchen" class="page active">
+      <h2>Cozinha</h2>
+      <div id="grid-kitchen"></div>
+    </div>
+
+    <div id="page-clean" class="page">
+      <h2>Limpeza</h2>
+      <div id="grid-clean"></div>
+    </div>
+
+    <div id="page-report" class="page">
+      <h2>Relatório</h2>
+      <div id="reportContent"></div>
+    </div>
+  </main>
+
+</div>
 
   <!-- MODAIS (mantém aqui também) -->
 
