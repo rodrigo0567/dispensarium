@@ -15,8 +15,23 @@ async function doLogin() {
   document.getElementById('loginOverlay').style.display = 'none';
   document.getElementById('app').style.display = 'flex';
 
-  renderAll();
+  await renderAll(); // agora funciona porque DB já foi iniciado
 }
+async function startApp() {
+  await initDB();
+
+  const user = localStorage.getItem('user');
+
+  if (user) {
+    document.getElementById('sidebarUser').textContent = user;
+    document.getElementById('loginOverlay').style.display = 'none';
+    document.getElementById('app').style.display = 'flex';
+
+    await renderAll();
+  }
+}
+
+window.onload = startApp;
 
 function doLogout() {
   localStorage.removeItem('user');
