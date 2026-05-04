@@ -75,3 +75,24 @@ async function confirmMovement() {
 
   pendingMov = null;
 }
+async function startMovement(id, type) {
+  const items = await dbGetAll('items');
+  const item = items.find(i => i.id === id);
+
+  if (!item) return;
+
+  if (type === 'out' && item.qty <= 0) {
+    toast("Sem estoque!");
+    return;
+  }
+
+  if (type === 'in') {
+    item.qty++;
+  } else {
+    item.qty--;
+  }
+
+  await dbPut('items', item);
+
+  await renderAll();
+}
