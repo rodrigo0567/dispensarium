@@ -5,89 +5,92 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dispensarium</title>
 
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <!-- Favicon (opcional) -->
+  <link rel="icon" href="/assets/logo.png">
 </head>
+
 <body>
 
   <!-- LOGIN -->
   <div id="loginOverlay">
     <div class="login-box">
       <div class="logo">
-        <img src="assets/logo.png" style="width:76px;">
+        <img src="/assets/logo.png" style="width:76px;">
         <div>Dispensarium</div>
       </div>
+
       <input id="loginName" type="text" placeholder="Seu nome completo"/>
       <button onclick="doLogin()">Entrar</button>
     </div>
   </div>
 
   <!-- APP -->
-  <!-- APP -->
-<div id="app" style="display:none;">
+  <div id="app" style="display:none;">
 
-  <aside class="sidebar">
-    <div class="sidebar-user">
-      Bem-vindo(a),<br>
-      <strong id="sidebarUser">—</strong>
-    </div>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
 
-    <nav>
-      <a class="active" onclick="showPage('kitchen')" id="nav-kitchen">
-        <span class="icon">🍳</span> Cozinha
-      </a>
+      <div class="sidebar-user">
+        Bem-vindo(a),<br>
+        <strong id="sidebarUser">—</strong>
+      </div>
 
-      <a onclick="showPage('clean')" id="nav-clean">
-        <span class="icon">🧹</span> Limpeza
-      </a>
+      <nav>
+        <a class="active" onclick="showPage('kitchen')">
+          🍳 Cozinha
+        </a>
 
-      <a onclick="showPage('report')" id="nav-report">
-        <span class="icon">📊</span> Relatório Mensal
-      </a>
+        <a onclick="showPage('clean')">
+          🧹 Limpeza
+        </a>
 
-      <a onclick="showPage('feira')" id="nav-feira">
-        <span class="icon">🛒</span> Lista de Feira
-        <span class="nav-badge" id="fairaBadge" style="display:none">0</span>
-      </a>
+        <a onclick="showPage('report')">
+          📊 Relatório
+        </a>
 
-      <a onclick="openAddModal()" id="nav-add">
-        <span class="icon">➕</span> Adicionar Item
-      </a>
-    </nav>
+        <a onclick="openAddModal()">
+          ➕ Adicionar Item
+        </a>
+      </nav>
 
-    <div class="sidebar-footer">
-      <button class="btn-logout" onclick="doLogout()">⬅️ Sair</button>
-    </div>
-  </aside>
+      <div class="sidebar-footer">
+        <button onclick="doLogout()">⬅️ Sair</button>
+      </div>
 
-  <main>
-    <div id="page-kitchen" class="page active">
-      <h2>Cozinha</h2>
-      <div id="grid-kitchen"></div>
-    </div>
+    </aside>
 
-    <div id="page-clean" class="page">
-      <h2>Limpeza</h2>
-      <div id="grid-clean"></div>
-    </div>
+    <!-- CONTEÚDO -->
+    <main>
 
-    <div id="page-report" class="page">
-      <h2>Relatório</h2>
-      <div id="reportContent"></div>
-    </div>
-  </main>
+      <section id="page-kitchen" class="page active">
+        <h2>Cozinha</h2>
+        <div id="grid-kitchen"></div>
+      </section>
 
-</div>
+      <section id="page-clean" class="page">
+        <h2>Limpeza</h2>
+        <div id="grid-clean"></div>
+      </section>
 
-  <!-- MODAIS (mantém aqui também) -->
+      <section id="page-report" class="page">
+        <h2>Relatório</h2>
+        <div id="reportContent"></div>
+      </section>
 
-  <!-- SCRIPTS -->
-    <link rel="stylesheet" href="/css/styles.css">
+    </main>
 
-<script src="/js/db.js"></script>
-<script src="/js/items.js"></script>
-<script src="/js/movements.js"></script>
-<script src="/js/report.js"></script>
-<script src="/js/ui.js"></script>
-<script src="/js/app.js"></script>
+  </div>
+
+  <!-- SCRIPTS (ORDEM IMPORTANTE) -->
+  <script src="/js/db.js"></script>
+  <script src="/js/items.js"></script>
+  <script src="/js/movements.js"></script>
+  <script src="/js/report.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/app.js"></script>
 
 </body>
 </html>
